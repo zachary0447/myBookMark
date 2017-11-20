@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的导航</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div class="wrapper" id="mainID">
+
+        </div>
+    </main>
+
+    <footer></footer>
+    <script>
+        var keys = {
+            '0': ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+            '1': ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+            '2': ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
+            'length': 3
+        }
+        var hash = {
+            'q': "qq.com",
+            'w': 'weibo.com',
+            'e': 'ele.me',
+            'r': 'renren.com',
+            't': 'tianya.com',
+            'y': 'youtube.com',
+            'u': 'uc.com',
+            'i': 'iqiyi.com',
+            'o': 'opera.com',
+            'p': undefined,
+            'a': 'acfun.tv',
+            's': 'sohu.com',
+            'z': 'zhihu.com',
+            'm': 'www.mcdonalds.com.cn'
+        }
+
+        var hashInLocalStorage = JSON.parse(localStorage.getItem('zzz') || 'null')
+        if(hashInLocalStorage){
+            hash = hashInLocalStorage
+        }
+
+        index = 0
+        rowLength = [10, 9, 7]
+        while (index < keys['length']) {
+            div1 = document.createElement('div')
+            mainID.appendChild(div1)
+            row = keys[index]
+            for (i = 0; i < rowLength[index]; i++) {
+                z = document.createElement('kbd')
+                z.textContent = row[i]
+                buttonE = document.createElement('button')
+                buttonE.textContent = 'E'
+                buttonE.id = row[i]
+                buttonE.onclick = function(xzkj){
+                    key = xzkj.target.id
+                    console.log(key)
+                    newWebsite = prompt('给我一个网址')
+                    hash[key] = newWebsite
+                    localStorage.setItem('zzz', JSON.stringify(hash))
+                }
+                z.appendChild(buttonE)
+                div1.appendChild(z)
+            }
+            index = index + 1
+        }
+
+        document.onkeypress = function(xzkj){
+            key = xzkj["key"]
+            website = hash[key]
+            //location.href = 'http://' + website
+            window.open("http://" + website, '_blank')
+        }
+
+    </script>
+</body>
+
+</html>
