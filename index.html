@@ -51,21 +51,41 @@
         rowLength = [10, 9, 7]
         while (index < keys['length']) {
             div1 = document.createElement('div')
+            div1.className = 'row'
             mainID.appendChild(div1)
             row = keys[index]
             for (i = 0; i < rowLength[index]; i++) {
                 z = document.createElement('kbd')
-                z.textContent = row[i]
+                span = document.createElement('span')
+                span.textContent = row[i]
+                span.className = "text"
+                z.appendChild(span)
                 buttonE = document.createElement('button')
                 buttonE.textContent = 'E'
                 buttonE.id = row[i]
+                
+                siteIcon = document.createElement('img')
+                if(hash[row[i]]){
+                    siteIcon.src = 'http://' + hash[row[i]] + '/favicon.ico'
+                } else{
+                    siteIcon.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+                }
+
+                siteIcon.onerror = function(xxx)
+                {
+                    xxx.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+                }
+                z.className = "key"
                 buttonE.onclick = function(xzkj){
                     key = xzkj.target.id
+                    siteIcon = xzkj.target.id.previousSibling
                     console.log(key)
                     newWebsite = prompt('给我一个网址')
                     hash[key] = newWebsite
+
                     localStorage.setItem('zzz', JSON.stringify(hash))
                 }
+                z.appendChild(siteIcon)
                 z.appendChild(buttonE)
                 div1.appendChild(z)
             }
